@@ -7,6 +7,11 @@ function App() {
   const [count, setCount] = useState(0)
   const a = useRef(0)
   const refbtn=useRef()
+  const pboxref=useRef()
+  const href=useRef()
+  const href1=useRef()
+  const href2=useRef()
+  const href3=useRef()
   let b=0;
   useEffect(() => {
     refbtn.current.style.backgroundColor="pink";
@@ -48,6 +53,23 @@ function App() {
     let random=Math.floor(Math.random()*colors.length);
     refbtn.current.style.backgroundColor=colors[random];
   }
+  function inbox(){
+      pboxref.current.querySelector("h1").replaceWith(href.current);
+      href.current.style.display="block";
+  }
+  function inbox1(){
+      pboxref.current.querySelector("h1").replaceWith(href1.current);
+      href1.current.style.display="block";
+  }
+  function inbox2(){
+      pboxref.current.querySelector("h1").replaceWith(href2.current);
+      href2.current.style.display="block";
+  }
+  function inbox3(){
+      pboxref.current.querySelector("h1").replaceWith(href3.current);
+      href3.current.style.display="block";
+  }
+
 
 
   return (
@@ -63,7 +85,18 @@ function App() {
         <button onClick={changeCountCol}>Change count color hehe..</button>
         <button onClick={printa}>Print a</button>
         {/* Prints correct value of a-same as console */}
+        <button onClick={inbox} >Yo</button>
+        <button onClick={inbox1} >Hi</button>
+        <button onClick={inbox2} >Hello</button>
+        <button onClick={inbox3} >Goodnight</button>
         <p ref={aref}></p>
+        <div className="box" ref={pboxref}>
+          <h1>NAMASTE</h1>
+        </div>
+        <h1 ref={href} style={{display:"none"}}>  YO </h1>
+        <h1 ref={href1} style={{display:"none"}}> Hi </h1>
+        <h1 ref={href2} style={{display:"none"}}>  Hello </h1>
+        <h1 ref={href3} style={{display:"none"}}> Goodnight </h1>
       </div>
     </>
   )
