@@ -20,7 +20,7 @@ function App() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        let data = await response.json(); // Corrected: .json()
+        let data = await response.json();
         setPosts(data); // Update the state with the fetched data
       } catch (e) {
         setError(e); // Catch and set any errors

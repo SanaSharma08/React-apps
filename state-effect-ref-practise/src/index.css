@@ -1,0 +1,10 @@
+.pin{
+  width: 300px;
+  height: 500px;
+  border: 2px solid red;
+  border-radius: 20px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
