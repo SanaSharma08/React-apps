@@ -15,11 +15,36 @@ const achievements = [
 
 const AchievementCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  // "swipe" gesture feature for mobile users
+  const [touchStart, setTouchStart] = useState(null);
+  const [dragOffset, setDragOffset] = useState(0); // Track live drag distance
   const total = achievements.length;
+  const minSwipeDistance = 50;
 
-  const nextSlide = () => setActiveIndex((prev) => (prev + 1) % total);
-  const prevSlide = () => setActiveIndex((prev) => (prev - 1 + total) % total);
+  const nextSlide = () => {
+    setActiveIndex((prev) => (prev + 1) % total);
+    setDragOffset(0);
+  };
 
+  const prevSlide = () => {
+    setActiveIndex((prev) => (prev - 1 + total) % total);
+    setDragOffset(0);
+  };
+  // "tilt" animation so the active card leans slightly in the direction of the swipe while the user is dragging
+  const onTouchStart = (e) => setTouchStart(e.targetTouches[0].clientX);
+
+  const onTouchMove = (e) => {
+    const currentTouch = e.targetTouches[0].clientX;
+    const diff = touchStart - currentTouch;
+    // We cap the dragOffset so it doesn't fly off screen
+    setDragOffset(diff);
+  };
+
+  const onTouchEnd = () => {
+    if (dragOffset > minSwipeDistance) nextSlide();
+    else if (dragOffset < -minSwipeDistance) prevSlide();
+    else setDragOffset(0); // Snap back if swipe wasn't far enough
+  };
   // Keyboard navigation
   useEffect(() => {
     const handleKeyboard = (e) => {
@@ -31,8 +56,12 @@ const AchievementCarousel = () => {
   }, [activeIndex]); 
 
   return (
-    <div className="carousel-container">
-      <div className="carousel-stage">
+    <div className="glass-wins-carousel-container"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
+      <div className="glass-wins-carousel-stage">
         {achievements.map((item, index) => {
           let offset = index - activeIndex;
           
@@ -46,25 +75,33 @@ const AchievementCarousel = () => {
           else if (offset < -1) position = "far-left";
           else if (offset > 1) position = "far-right";
 
+          // --- DYNAMIC TILT LOGIC ---
+          const isCenter = position === "active";
+          const tiltStyle = isCenter ? {
+            transform: `translate3d(${-dragOffset * 0.5}px, 0, 250px) rotateY(${-dragOffset * 0.05}deg)`,
+            transition: dragOffset === 0 ? 'all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)' : 'none'
+          } : {};
+
           return (
             <div 
               key={item.id} 
-              className={`carousel-card ${position}`} 
+              className={`glass-wins-carousel-card ${position}`} 
               onClick={() => setActiveIndex(index)}
+              style={tiltStyle}
             >
               {/* RESTORED CONTENT STARTS HERE */}
-              <div className="card-image" style={{ backgroundImage: `url(${item.image})` }}>
-                {/* <div className="expand-badge">Expand</div> */}
+              <div className="glass-wins-card-image" style={{ backgroundImage: `url(${item.image})` }}>
+                {/* <div className="glass-wins-expand-badge">Expand</div> */}
               </div>
               
-              <div className="card-content">
-                <div className="card-header">
+              <div className="glass-wins-card-content">
+                <div className="glass-wins-card-header">
                   <h3>{item.title}</h3>
                   <span>{item.date}</span>
                 </div>
                 <p>"{item.description}"</p>
-                <div className="card-footer">
-                   <small className="tag-pill">{item.tag}</small>
+                <div className="glass-wins-card-footer">
+                   <small className="glass-wins-tag-pill">{item.tag}</small>
                 </div>
               </div>
               {/* RESTORED CONTENT ENDS HERE */}
@@ -73,20 +110,20 @@ const AchievementCarousel = () => {
         })}
       </div>
 
-      <div className="carousel-controls">
-        <button onClick={prevSlide} className="nav-btn">‹</button>
+      <div className="glass-wins-carousel-controls">
+        <button onClick={prevSlide} className="glass-wins-nav-btn">‹</button>
         
-        <div className="pagination-indicators">
+        <div className="glass-wins-pagination-indicators">
             {achievements.map((_, index) => (
               <div 
                 key={index}
-                className={`dot ${index === activeIndex ? 'active' : ''}`}
+                className={`glass-wins-dot ${index === activeIndex ? 'active' : ''}`}
                 onClick={() => setActiveIndex(index)}
               />
             ))}
         </div>
 
-        <button onClick={nextSlide} className="nav-btn">›</button>
+        <button onClick={nextSlide} className="glass-wins-nav-btn">›</button>
       </div>
     </div>
   );

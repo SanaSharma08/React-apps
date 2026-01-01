@@ -6,7 +6,7 @@
   --shift-x: 30vw;
 }
 
-.carousel-container {
+.glass-wins-carousel-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,9 +17,10 @@
   overflow: hidden;
   color: white;
   width: 100%;
+  touch-action: pan-y; /* Allows vertical scrolling but prevents horizontal browser interference */
 }
 
-.carousel-stage {
+.glass-wins-carousel-stage {
   position: relative;
   width: 100vw; /* Occupy full width to allow cards to spread */
   height: 500px;
@@ -29,7 +30,7 @@
   transform-style: preserve-3d;
 }
 
-.carousel-card {
+.glass-wins-carousel-card {
   position: absolute;
   /* Dynamic width: wider on desktop, narrower on mobile */
   width: clamp(280px, 25vw, 400px); 
@@ -42,48 +43,50 @@
   transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
   cursor: pointer;
   overflow: hidden;
+  user-select: none; /* Prevents text selection while swiping */
+  -webkit-user-drag: none; /* Prevents image dragging ghosting */
 }
 
 /* --- 3D TRANSFORM STATES --- */
 
-.carousel-card.active {
+.glass-wins-carousel-card.active {
   transform: translate3d(0, 0, 250px) rotateY(0deg);
   z-index: 10;
   opacity: 1;
   box-shadow: 0 40px 80px rgba(0,0,0,0.8);
 }
 
-.carousel-card.left {
+.glass-wins-carousel-card.left {
   transform: translate3d(calc(var(--shift-x) * -1), 0, -150px) rotateY(35deg) scale(0.85);
   z-index: 5;
   opacity: 0.5;
 }
 
-.carousel-card.right {
+.glass-wins-carousel-card.right {
   transform: translate3d(var(--shift-x), 0, -150px) rotateY(-35deg) scale(0.85);
   z-index: 5;
   opacity: 0.5;
 }
 
-.carousel-card.far-left {
+.glass-wins-carousel-card.far-left {
   transform: translate3d(calc(var(--shift-x) * -1.8), 0, -500px) rotateY(45deg) scale(0.6);
   z-index: 1;
   opacity: 0;
 }
 
-.carousel-card.far-right {
+.glass-wins-carousel-card.far-right {
   transform: translate3d(calc(var(--shift-x) * 1.8), 0, -500px) rotateY(-45deg) scale(0.6);
   z-index: 1;
   opacity: 0;
 }
 
-.carousel-card.hidden {
+.glass-wins-carousel-card.hidden {
   transform: translate3d(0, 0, -1000px) scale(0.1);
   opacity: 0;
 }
 
 /* Card Inner Styling */
-.card-image {
+.glass-wins-card-image {
   height: 60%;
   background-size: cover;
   background-position: center;
@@ -91,7 +94,7 @@
   padding: 15px;
 }
 
-.expand-badge {
+/* .glass-wins-expand-badge {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(5px);
   padding: 5px 15px;
@@ -99,23 +102,28 @@
   font-size: 0.8rem;
   width: fit-content;
   margin: 0 auto;
-}
+} */
 
-.card-content {
+.glass-wins-card-content {
   padding: 20px;
   flex-grow: 1;
-  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.4));
+  /* background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.4)); */
+}
+.glass-wins-card-content p{
+  font-style: italic;
+  margin-top: 0;
 }
 
-.card-header {
+.glass-wins-card-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
-.card-header h3 { margin: 0; font-size: 1.2rem; }
+.glass-wins-card-header h3 { margin: 0; font-size: 1.2rem; }
+.glass-wins-card-header span { margin: 0; font-size: 0.8rem; }
 
-.tag-pill {
+.glass-wins-tag-pill {
   background: rgba(255,255,255,0.1);
   padding: 4px 12px;
   border-radius: 4px;
@@ -125,7 +133,7 @@
 }
 
 /* Controls */
-.carousel-controls {
+.glass-wins-carousel-controls {
   margin-top: 40px;
   display: flex;
   align-items: center;
@@ -137,7 +145,7 @@
   border: 1px solid var(--glass-border);
 }
 
-.nav-btn {
+.glass-wins-nav-btn {
   background: none;
   border: none;
   color: white;
@@ -146,23 +154,8 @@
   padding: 0 10px;
 }
 
-.user-badge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-left: 1px solid var(--glass-border);
-  border-right: 1px solid var(--glass-border);
-  padding: 0 20px;
-}
-
-.user-badge img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
-
 /*Pagination : dots to track cards styling */
-.pagination-indicators {
+.glass-wins-pagination-indicators {
   display: flex;
   gap: 8px;
   align-items: center;
@@ -172,7 +165,7 @@
   margin: 0 10px;
 }
 
-.dot {
+.glass-wins-dot {
   width: 6px;
   height: 6px;
   background: rgba(255, 255, 255, 0.3);
@@ -181,7 +174,7 @@
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.dot.active {
+.glass-wins-dot.active {
   background: #fff;
   width: 18px; /* The "pill" effect when active */
   border-radius: 10px;
@@ -189,13 +182,13 @@
 }
 
 /* Hover effect to show interactivity */
-.dot:hover:not(.active) {
+.glass-wins-dot:hover:not(.active) {
   background: rgba(255, 255, 255, 0.6);
   transform: scale(1.2);
 }
 
 /* Ensure the control bar grows with the number of dots */
-.carousel-controls {
+.glass-wins-carousel-controls {
   min-width: fit-content;
   max-width: 90vw;
 }
@@ -214,32 +207,32 @@
 @media (max-width: 600px) {
   :root { --shift-x: 38vw; }
   
-  .carousel-card {
+  .glass-wins-carousel-card {
     width: 75vw; /* Almost full width on mobile */
     height: 450px;
   }
   
-  .carousel-card.left {
+  .glass-wins-carousel-card.left {
     transform: translate3d(-45%, 0, -250px) rotateY(45deg) scale(0.8);
   }
   
-  .carousel-card.right {
+  .glass-wins-carousel-card.right {
     transform: translate3d(45%, 0, -250px) rotateY(-45deg) scale(0.8);
   }
-  .pagination-indicators {
+  .glass-wins-pagination-indicators {
     gap: 5px;
   }
-  .dot {
+  .glass-wins-dot {
     width: 4px;
     height: 4px;
   }
-  .dot.active {
+  .glass-wins-dot.active {
     width: 12px;
   }
 }
 
 /* Bottom Controls */
-.carousel-controls {
+.glass-wins-carousel-controls {
   margin-top: 20px;
   display: flex;
   align-items: center;

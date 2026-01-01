@@ -1,0 +1,223 @@
+.por-section-wrapper {
+    background: #000;
+    padding: 40px 5%;
+    color: #fff;
+    min-height: 100vh;
+    border: 2px solid red;
+}
+.por-main-title{
+    text-align: center;
+}
+
+/* GRID LOGIC */
+.por-grid-layout {
+    display: grid;
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* Desktop: 3 columns */
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.por-card {
+    position: relative;
+    height: 480px;
+    border-radius: 28px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    
+    /* Background properties */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Glass border */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.por-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* CHRONOLOGICAL NUMBERS */
+/* Ensure the step number sits BEHIND the text but ON TOP of the image */
+.por-step-number {
+    position: absolute;
+    top: -10px;
+    right: 15px;
+    font-size: 9rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.07); /* Very subtle so it doesn't distract from text */
+    z-index: 1;
+    pointer-events: none; /* User can click "through" the number */
+}
+
+.por-card-content-box {
+    position: relative;
+    z-index: 2; /* Text sits on top of the number */
+}
+
+.por-org-badge {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.por-role-name {
+    font-size: 1.6rem;
+    margin: 10px 0;
+}
+
+.por-description-preview {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Show only 3 lines */
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.por-read-more {
+    background: none;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+}
+
+/* MODAL / READ MORE STYLING */
+/* Prevent the grid from shifting when modal opens */
+.por-modal-overlay {
+    position: fixed; /* Changed from absolute to fixed */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Highest possible z-index */
+    padding: 20px;
+}
+
+.por-modal-content {
+    background: rgba(30, 30, 30, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 90%;
+    max-width: 800px; /* Increased width */
+    max-height: 85vh; /* Larger height */
+    border-radius: 32px;
+    position: relative;
+    padding: 50px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+.por-modal-scroll-area {
+    margin-top: 25px;
+    overflow-y: auto; /* Allow internal scrolling if content is long */
+    padding-right: 15px;
+}
+
+/* Custom scrollbar for a premium look */
+.por-modal-scroll-area::-webkit-scrollbar {
+    width: 6px;
+}
+.por-modal-scroll-area::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+.por-modal-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    white-space: pre-line; /* Respects line breaks */
+}
+
+.por-close-btn {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.por-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ICON ROW STYLING */
+.por-icon-row {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.por-mini-icon {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 5px;
+    transition: transform 0.3s ease;
+}
+
+.por-mini-icon:hover {
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* ADJUST MODAL HEADER FOR ICONS */
+.por-modal-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* TABLET LAYOUT (2 Columns, 2 Rows) */
+@media (max-width: 1024px) and (min-width: 601px) {
+    .por-grid-layout {
+        grid-template-columns: 1fr 1fr;
+    }
+    /* Third card takes up the whole bottom row */
+    .por-card-3 {
+        grid-column: span 2;
+    }
+}
+
+/* MOBILE LAYOUT (1 Column) */
+@media (max-width: 600px) {
+    .por-grid-layout {
+        grid-template-columns: 1fr;
+    }
+    .por-card {
+        height: 350px;
+    }
+}
